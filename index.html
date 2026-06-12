@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class Report – Day 7 | Devika K</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #F9F6F2;
+      --page:       #FFFFFF;
+      --lavender:   #C5BAF0;
+      --lav-soft:   #EDE9FB;
+      --mint:       #A8D8C8;
+      --mint-soft:  #E4F4EE;
+      --peach:      #F2B8A0;
+      --peach-soft: #FDE9E1;
+      --sky:        #A8CDE8;
+      --sky-soft:   #DEEEF9;
+      --blush:      #F0B8C8;
+      --blush-soft: #FBE6ED;
+      --yellow:     #F5D98A;
+      --yellow-soft:#FEF6DC;
+      --ink:        #2D2D3A;
+      --ink-mid:    #5A5A72;
+      --ink-light:  #9090A8;
+      --border:     #EAEAF0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      padding: 48px 20px 64px;
+      color: var(--ink);
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--page);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.07);
+    }
+
+    /* ─── COVER ─── */
+    .cover {
+      background: linear-gradient(160deg, #EDE9FB 0%, #DEEEF9 50%, #E4F4EE 100%);
+      padding: 52px 56px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #F2B8A0 0%, transparent 70%);
+      opacity: 0.45;
+    }
+
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      position: relative; z-index: 1;
+    }
+
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1.5px solid;
+    }
+
+    .badge.lav   { background: #EDE9FB; border-color: #C5BAF0; color: #6B5FAA; }
+    .badge.mint  { background: #E4F4EE; border-color: #A8D8C8; color: #3A8A6E; }
+    .badge.platform { background: #E8F0FE; border-color: #A8BEF0; color: #3A5FAA; }
+
+    .cover-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(30px, 5vw, 44px);
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      position: relative; z-index: 1;
+      margin-bottom: 6px;
+    }
+
+    .cover-title em {
+      font-style: italic;
+      color: #7B6FBE;
+    }
+
+    .cover-sub {
+      font-size: 13px;
+      color: var(--ink-mid);
+      font-weight: 400;
+      position: relative; z-index: 1;
+      margin-bottom: 36px;
+    }
+
+    /* info pills */
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: relative; z-index: 1;
+    }
+
+    .info-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.7);
+      border: 1.5px solid rgba(255,255,255,0.9);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 12.5px;
+      color: var(--ink);
+      backdrop-filter: blur(4px);
+    }
+
+    .info-pill .pill-label {
+      font-weight: 400;
+      color: var(--ink-light);
+      font-size: 11px;
+    }
+
+    .info-pill .pill-val {
+      font-weight: 600;
+    }
+
+    /* ─── INFO TABLE ─── */
+    .info-table-wrap {
+      padding: 0 56px;
+      margin-top: -1px;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .info-table td {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+    }
+
+    .info-table td.lbl {
+      background: var(--lav-soft);
+      color: #6B5FAA;
+      font-weight: 700;
+      font-size: 10.5px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      width: 130px;
+    }
+
+    .info-table td.val {
+      color: var(--ink);
+      font-weight: 500;
+      background: #FAFAFA;
+    }
+
+    .platform-val { vertical-align: middle; }
+
+    .platform-chip {
+      display: inline-block;
+      background: #E8F0FE;
+      border: 1.5px solid #A8BEF0;
+      color: #3A5FAA;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      margin-right: 6px;
+    }
+
+    .platform-note {
+      font-size: 11px;
+      color: var(--ink-light);
+      font-weight: 400;
+    }
+
+    /* ─── BODY ─── */
+    .report-body {
+      padding: 48px 56px 56px;
+    }
+
+    /* ─── SECTION ─── */
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .sec-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      flex-shrink: 0;
+    }
+
+    .sec-line {
+      flex: 1;
+      height: 1.5px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .sec-title {
+      font-family: 'Lora', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .section > p {
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: var(--ink-mid);
+      margin-bottom: 20px;
+    }
+
+    /* ─── SUB TOPICS ─── */
+    .sub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .sub-card {
+      border-radius: 14px;
+      padding: 18px 20px;
+      border: 1.5px solid transparent;
+    }
+
+    .sub-card.lav   { background: var(--lav-soft);   border-color: #D6D0F4; }
+    .sub-card.mint  { background: var(--mint-soft);  border-color: #BEE4D6; }
+    .sub-card.peach { background: var(--peach-soft); border-color: #F4C8B4; }
+    .sub-card.sky   { background: var(--sky-soft);   border-color: #BCD8EE; }
+    .sub-card.blush { background: var(--blush-soft); border-color: #F0C4D0; }
+    .sub-card.yellow{ background: var(--yellow-soft);border-color: #F0D89A; }
+
+    .sub-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 7px;
+    }
+
+    .sub-card-text {
+      font-size: 12.5px;
+      line-height: 1.75;
+      color: var(--ink-mid);
+    }
+
+    /* full-width sub card */
+    .sub-card.full {
+      grid-column: span 2;
+    }
+
+    /* ─── COLAB CALLOUT ─── */
+    .callout {
+      background: var(--yellow-soft);
+      border: 1.5px solid #F0D89A;
+      border-left: 4px solid var(--yellow);
+      border-radius: 0 14px 14px 0;
+      padding: 16px 20px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #5A4A00;
+      margin-top: 14px;
+      grid-column: span 2;
+    }
+
+    .callout strong { color: #3A3000; font-weight: 700; }
+
+    /* ─── COMPARE TABLE ─── */
+    .compare-wrap {
+      margin-top: 16px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .compare-table thead th {
+      background: var(--lav-soft);
+      color: #5A4FA0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 18px;
+      text-align: left;
+      border-bottom: 1.5px solid #D6D0F4;
+    }
+
+    .compare-table tbody td {
+      padding: 12px 18px;
+      border-bottom: 1.5px solid var(--border);
+      color: var(--ink-mid);
+      vertical-align: top;
+      line-height: 1.65;
+    }
+
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table tbody tr:nth-child(even) td { background: #FAFAFA; }
+    .compare-table td:first-child { font-weight: 700; color: var(--ink); }
+
+    .rel {
+      display: inline-block;
+      border-radius: 100px;
+      padding: 3px 11px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .rel.p { background: var(--lav-soft);   color: #6B5FAA; border: 1.5px solid #C5BAF0; }
+    .rel.s { background: var(--mint-soft);  color: #3A7A60; border: 1.5px solid #A8D8C8; }
+    .rel.d { background: var(--sky-soft);   color: #2A6090; border: 1.5px solid #A8CDE8; }
+
+    /* ─── CONCLUSION ─── */
+    .conclusion-box {
+      background: linear-gradient(135deg, var(--lav-soft) 0%, var(--mint-soft) 100%);
+      border: 1.5px solid #D0D8F0;
+      border-radius: 18px;
+      padding: 28px 30px;
+    }
+
+    .conclusion-box p {
+      font-size: 13.5px;
+      line-height: 1.9;
+      color: var(--ink-mid);
+    }
+
+    .conclusion-box p + p { margin-top: 12px; }
+
+    code {
+      background: var(--lav-soft);
+      color: #6B5FAA;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+    }
+
+    /* ─── FOOTER ─── */
+    .report-footer {
+      border-top: 1.5px solid var(--border);
+      padding: 16px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #FAFAFA;
+    }
+
+    .footer-left  { font-size: 11px; color: var(--ink-light); font-weight: 500; }
+    .footer-right { font-size: 11px; color: #7B6FBE; font-weight: 600; letter-spacing: 0.05em; }
+
+    @media (max-width: 600px) {
+      body { padding: 0; }
+
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        width: 100%;
+      }
+
+      .cover { padding: 28px 20px 28px; }
+
+      .cover-title { font-size: 26px; }
+
+      .info-table-wrap { padding: 0 16px; }
+
+      .info-table,
+      .info-table tbody,
+      .info-table tr,
+      .info-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .info-table tr {
+        margin-bottom: 8px;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .info-table td.lbl {
+        width: 100%;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .info-table td.val {
+        width: 100%;
+      }
+
+      .report-body { padding: 28px 16px 36px; }
+
+      .sub-grid { grid-template-columns: 1fr; }
+      .sub-card.full, .callout { grid-column: span 1; }
+
+      .compare-table thead,
+      .compare-table tbody,
+      .compare-table tr,
+      .compare-table th,
+      .compare-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .compare-table thead { display: none; }
+
+      .compare-table tr {
+        margin-bottom: 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .compare-table td {
+        border-bottom: 1px solid var(--border);
+        padding: 8px 12px;
+      }
+
+      .compare-table td:last-child { border-bottom: none; }
+
+      .report-footer {
+        padding: 14px 16px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ─── COVER ─── -->
+  <div class="cover">
+    <div class="cover-title">Class Report</div>
+  </div>
+
+  <!-- ─── INFO TABLE ─── -->
+  <div class="info-table-wrap">
+    <table class="info-table">
+      <tr>
+        <td class="lbl">Student</td>
+        <td class="val">Devika K</td>
+        <td class="lbl">Day</td>
+        <td class="val">Day 7</td>
+      </tr>
+      <tr>
+        <td class="lbl">Date</td>
+        <td class="val">11th June 2026</td>
+        <td class="lbl">Faculty</td>
+        <td class="val">Miss Fenita Grace</td>
+      </tr>
+      <tr>
+        <td class="lbl">Time</td>
+        <td class="val">10:00 AM – 1:00 PM</td>
+        <td class="lbl">Duration</td>
+        <td class="val">3 Hours</td>
+      </tr>
+      <tr>
+        <td class="lbl">Course</td>
+        <td class="val">Python Programming &amp; Artificial Intelligence</td>
+        <td class="lbl">Platform</td>
+        <td class="val platform-val">
+          <span class="platform-chip">Microsoft Teams</span>
+          <span class="platform-note">Online class platform</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ─── BODY ─── -->
+  <div class="report-body">
+
+    <!-- 1. Session Overview -->
+    <div class="section">
+      <div class="section-head">
+        <span class="sec-num">01</span>
+        <div class="sec-line"></div>
+        <div class="sec-title">🗓️ Session Overview</div>
+        <div class="sec-line"></div>
+      </div>
+      <p>On Day 7, the session was held from 10:00 AM to 1:00 PM under the guidance of Miss Fenita Grace. The class was conducted online through Microsoft Teams as the delivery platform. The session covered two major areas: Python Programming and an Introduction to Artificial Intelligence. Practical work was carried out using Google Colab, a cloud-based coding environment that allows writing and running code directly in the browser without any local installation.</p>
+      <p>The day began with Python fundamentals and gradually moved into the concepts of Artificial Intelligence, providing both theoretical knowledge and hands-on coding experience.</p>
+    </div>
+
+    <!-- 2. Python Programming -->
+    <div class="section">
+      <div class="section-head">
+        <span class="sec-num">02</span>
+        <div class="sec-line"></div>
+        <div class="sec-title">🐍 Python Programming</div>
+        <div class="sec-line"></div>
+      </div>
+      <p>The first part of the session focused on building a strong foundation in Python programming. Python is one of the most widely used programming languages today, known for its simplicity and readability. The following topics were covered in detail:</p>
+
+      <div class="sub-grid">
+
+        <div class="sub-card lav">
+          <div class="sub-card-title">🧠 Logic</div>
+          <div class="sub-card-text">The concept of logic in programming was introduced — the ability to think through a problem in a clear, structured way before writing any code, covering conditions, decisions, and program flow.</div>
+        </div>
+
+        <div class="sub-card mint">
+          <div class="sub-card-title">💻 Programming</div>
+          <div class="sub-card-text">An introduction to programming was covered, explaining the process of writing instructions a computer can understand and execute, along with the basic structure of a Python program.</div>
+        </div>
+
+        <div class="sub-card peach">
+          <div class="sub-card-title">📋 Algorithm</div>
+          <div class="sub-card-text">Algorithms were explained as well-defined, step-by-step instructions for solving a problem. Planning algorithms on paper or in pseudocode before coding was emphasised as a key practice.</div>
+        </div>
+
+        <div class="sub-card sky">
+          <div class="sub-card-title">📦 Variables</div>
+          <div class="sub-card-text">Variables were introduced as named containers for storing data. Topics included naming conventions, value assignment, and how variables hold different data types throughout program execution.</div>
+        </div>
+
+        <div class="sub-card blush">
+          <div class="sub-card-title">🔢 Data Types</div>
+          <div class="sub-card-text">The session covered integers, floats, strings, and booleans. Python's automatic type identification was explored, along with how data type choice affects storage, processing, and display.</div>
+        </div>
+
+        <div class="sub-card sky">
+          <div class="sub-card-title">⚙️ Programs</div>
+          <div class="sub-card-text">Several basic programs were written and executed, including programs involving user input, data processing using variables and data types, and displaying output in Google Colab.</div>
+        </div>
+
+        <div class="callout">
+          <strong>☁️ Google Colab — Hands-on Practice:</strong> Google Colab was used as the primary environment for writing and running Python code during the session. It is a free, cloud-based platform that runs in the browser with no local installation required. Notebooks were created, code was written in cells, and outputs were viewed instantly — bridging theory directly into working code.
+        </div>
+
+        <div class="sub-card mint full">
+          <div class="sub-card-title">🔁 For Loop</div>
+          <div class="sub-card-text">The for loop was introduced as a control structure used to repeat a block of code a specific number of times or over a sequence. The syntax, the <code>range()</code> function, and the loop variable were covered with practical executed examples demonstrating how for loops simplify repetitive tasks.</div>
+        </div>
+
+        <div class="sub-card lav full">
+          <div class="sub-card-title">🔄 While Loop</div>
+          <div class="sub-card-text">The while loop was explained as a loop that continues executing as long as a specified condition remains true. Writing while loops, defining conditions, and updating them to avoid infinite loops were covered, followed by a comparison between for and while loops to clarify when each is appropriate.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. Artificial Intelligence -->
+    <div class="section">
+      <div class="section-head">
+        <span class="sec-num">03</span>
+        <div class="sec-line"></div>
+        <div class="sec-title">🤖 Artificial Intelligence (AI)</div>
+        <div class="sec-line"></div>
+      </div>
+      <p>The second part of the session introduced the field of Artificial Intelligence. AI is one of the most rapidly growing areas in technology today, and this session provided a solid foundation to understand what it is and how it is applied.</p>
+
+      <div class="sub-grid">
+
+        <div class="sub-card lav">
+          <div class="sub-card-title">💡 What is Artificial Intelligence</div>
+          <div class="sub-card-text">AI was defined as the simulation of human intelligence by machines — enabling them to understand language, recognise patterns, make decisions, and solve problems. It is a broad field bringing together various techniques to make machines smarter.</div>
+        </div>
+
+        <div class="sub-card peach">
+          <div class="sub-card-title">🗂️ Types of AI</div>
+          <div class="sub-card-text"><strong>Narrow AI</strong> performs specific tasks (e.g. facial recognition). <strong>General AI</strong> can perform any intellectual task a human can. <strong>Super AI</strong> is a hypothetical future AI surpassing human intelligence in all areas.</div>
+        </div>
+
+        <div class="sub-card sky full">
+          <div class="sub-card-title">⚖️ AI vs Machine Learning vs Deep Learning</div>
+          <div class="sub-card-text">A clear comparison was made between all three concepts to show how they relate to each other.</div>
+          <div class="compare-wrap" style="margin-top:14px;">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>Definition</th>
+                  <th>Relationship</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Artificial Intelligence</td>
+                  <td>Any technique enabling machines to mimic human intelligence — the broadest concept.</td>
+                  <td><span class="rel p">Parent Field</span></td>
+                </tr>
+                <tr>
+                  <td>Machine Learning</td>
+                  <td>Machines trained on data to improve performance over time without explicit programming.</td>
+                  <td><span class="rel s">Subset of AI</span></td>
+                </tr>
+                <tr>
+                  <td>Deep Learning</td>
+                  <td>Uses multi-layered artificial neural networks to process and learn from large data sets.</td>
+                  <td><span class="rel d">Subset of ML</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 4. Conclusion -->
+    <div class="section" style="margin-bottom:0;">
+      <div class="section-head">
+        <span class="sec-num">04</span>
+        <div class="sec-line"></div>
+        <div class="sec-title">✅ Conclusion</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="conclusion-box">
+        <p>Day 7 was a highly productive session that successfully covered both practical programming skills and foundational knowledge in Artificial Intelligence. Starting from the basics of logic and algorithms, the session built steadily through Python fundamentals — including variables, data types, and loops — all practised hands-on using Google Colab.</p>
+        <p>The transition into Artificial Intelligence provided a broader perspective on how programming connects to modern technology. Understanding the distinction between AI, Machine Learning, and Deep Learning gave a clearer picture of the technology landscape. Overall, the session was well-structured, engaging, and provided a strong base for the topics ahead.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <div class="report-footer">
+    <span class="footer-left">Class Report &nbsp;·&nbsp; Day 7 &nbsp;·&nbsp; 11th June 2026</span>
+
+  </div>
+
+</div>
+</body>
+</html>
